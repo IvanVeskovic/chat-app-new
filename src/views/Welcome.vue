@@ -47,7 +47,7 @@ const enterChat = () => {
   input {
     width: 100%;
     padding: 10px;
-    border-radius: 20px;
+    border-radius: 3px;
     border: 1px solid #eee;
     outline: none;
     color: #999;
@@ -57,6 +57,10 @@ const enterChat = () => {
     font-weight: bold;
     text-decoration: underline;
     cursor: pointer;
+
+    &:hover {
+      color: #299bf8;
+    }
   }
   button {
     margin: 20px auto;

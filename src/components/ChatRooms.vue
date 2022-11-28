@@ -1,24 +1,44 @@
 <template>
   <div class="chat-rooms">
-    <div class="room" @click="handleClick('home')">home</div>
-    <div class="room" @click="handleClick('tech')">tech</div>
-    <div class="room" @click="handleClick('cars')">cars</div>
-    <div class="room" @click="handleClick('general')">general</div>
-    <div>{{ currentRoom }}</div>
+    <div class="chat-rooms__room" @click="handleClick('home')">#home</div>
+    <div class="chat-rooms__room" @click="handleClick('tech')">#tech</div>
+    <div class="chat-rooms__room" @click="handleClick('cars')">#cars</div>
+    <div class="chat-rooms__room" @click="handleClick('general')">#general</div>
+    <div class="chat-rooms__room" @click="handleClick('messages')">#text</div>
   </div>
 </template>
 
 <script setup>
 import { useChatStore } from "@/store";
-import { computed } from "vue";
 
-const store = useChatStore();
-
-const currentRoom = computed(() => store.getCurrentRoom);
+const chatStore = useChatStore();
 
 const handleClick = (currentRoom) => {
-  store.setCurrentRoom(currentRoom);
+  chatStore.setCurrentRoom(currentRoom);
 };
 </script>
 
-<style></style>
+<style lang="scss">
+.chat-rooms {
+  display: flex;
+  justify-content: center;
+  padding: 15px 0;
+  border-bottom: 2px solid #299bf8;
+
+  &__room {
+    font-size: 20px;
+    font-style: italic;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+
+    &:hover {
+      color: #299bf8;
+    }
+
+    &:not(:last-child) {
+      border-right: 1px solid #299bf8;
+    }
+  }
+}
+</style>
