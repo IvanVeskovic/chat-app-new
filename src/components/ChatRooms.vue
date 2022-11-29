@@ -1,10 +1,8 @@
 <template>
   <div class="chat-rooms">
-    <div class="chat-rooms__room" @click="handleClick('home')">#home</div>
+    <div class="chat-rooms__room" @click="handleClick('message')">#home</div>
     <div class="chat-rooms__room" @click="handleClick('tech')">#tech</div>
     <div class="chat-rooms__room" @click="handleClick('cars')">#cars</div>
-    <div class="chat-rooms__room" @click="handleClick('general')">#general</div>
-    <div class="chat-rooms__room" @click="handleClick('messages')">#text</div>
   </div>
 </template>
 

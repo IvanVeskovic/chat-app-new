@@ -9,6 +9,8 @@ const getCollection = (collection) => {
     .collection(collection)
     .orderBy("createdAt");
 
+  console.log(collectionRef.value);
+
   const unsub = collectionRef.onSnapshot(
     (snap) => {
       let results = [];
@@ -16,6 +18,7 @@ const getCollection = (collection) => {
         doc.data().createdAt && results.push({ ...doc.data(), id: doc.id });
       });
       documents.value = results;
+      debugger;
       error.value = null;
     },
     (err) => {

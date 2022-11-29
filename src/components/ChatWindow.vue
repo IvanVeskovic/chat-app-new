@@ -1,7 +1,7 @@
 <template>
   <div class="chat-window">
     <div v-if="error">{{ error }}</div>
-    <div v-if="documents" class="messages" ref="messages">
+    <div v-if="formattedDocuments" class="messages" ref="messages">
       <div
         v-for="doc in formattedDocuments"
         :key="doc.id"
@@ -19,20 +19,40 @@
 </template>
 
 <script setup>
-import getCollection from "../composables/getCollection";
+// import getCollection from "../composables/getCollection";
 import { formatDistanceToNow } from "date-fns";
-import { computed, onUpdated, ref } from "@vue/runtime-core";
+import { computed, onMounted, onUpdated, ref, watch } from "@vue/runtime-core";
 import getUser from "@/composables/getUser";
+import { useChatStore } from "@/store";
 
-const { error, documents } = getCollection("message");
+const chatStore = useChatStore();
+
+// const formattedDocuments = ref([]);
+// const roomError = ref("");
+// const currentRoom = computed(() => chatStore.getCurrentRoom);
+// const { error, documents } = getCollection("messages");
+
+const roomMessages = computed(() => chatStore.getDocuments);
+const error = computed(() => chatStore.getError);
 
 const formattedDocuments = computed(() => {
-  if (documents.value) {
-    return documents.value.map((doc) => {
+  if (roomMessages.value) {
+    return roomMessages.value.map((doc) => {
       let time = formatDistanceToNow(doc.createdAt.toDate());
       return { ...doc, createdAt: time };
     });
   }
+});
+
+watch(
+  () => chatStore.getCurrentRoom,
+  () => {
+    chatStore.getCollection();
+  }
+);
+
+onMounted(() => {
+  chatStore.getCollection();
 });
 
 const user = computed(() => {
